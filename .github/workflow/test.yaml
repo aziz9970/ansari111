@@ -1,4 +1,4 @@
-mashud ansari, Now
+
 name: Deploy to Amazon ECS
 
 on:
@@ -26,24 +26,24 @@ jobs:
     - name: Build Docker image
       run: |
         docker build -t my-image .
-        docker tag my-image:latest 654654194612.dkr.ecr.ap-south-1.amazonaws.com/mashudrepo:latest
+        docker tag my-image:latest 025066249719.dkr.ecr.ap-south-1.amazonaws.com/aziz-repo:latest
 
     - name: Push Docker image to Amazon ECR
       run: |
-        docker push 654654194612.dkr.ecr.ap-south-1.amazonaws.com/mashudrepo:latest
+        docker push 025066249719.dkr.ecr.ap-south-1.amazonaws.com/aziz-repo:latest
 
     - name: Update ECS task definition
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
         task-definition: taskDef.json
-        container-name: ecs-container1
-        image: 654654194612.dkr.ecr.ap-south-1.amazonaws.com/mashudrepo:latest
+        container-name: azizcontainer
+        image: 025066249719.dkr.ecr.ap-south-1.amazonaws.com/aziz-repo:latest
 
     - name: Deploy to ECS service
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: mashud-service
-        cluster: mashud-cluster1
+        service: AzizService
+        cluster: AzizCluster
         wait-for-service-stability: true
